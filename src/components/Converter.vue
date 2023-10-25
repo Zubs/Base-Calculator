@@ -37,7 +37,10 @@
       </v-form>
       <v-card class="pa-5" v-if="result">
         <v-card-text>
-          <h1>{{ result }}</h1>
+          <h1>
+            {{ result }}
+            <v-icon @click="copyResult()">mdi-content-copy</v-icon>
+          </h1>
         </v-card-text>
       </v-card>
     </v-container>
@@ -83,7 +86,6 @@ export default {
       }
     },
 
-    // Update Rules
     setRules() {
       if (this.baseFrom === this.bases[0]) {
         // Set Base 2 Rule
@@ -100,6 +102,11 @@ export default {
         this.rules[1] = (v) =>
           /[0-9A-Fa-f]/.test(v) || "Number Must Be Less Than 16";
       }
+    },
+
+    async copyResult() {
+      // Copy result to clipboard
+      await navigator.clipboard.writeText(this.result);
     },
   },
 };
